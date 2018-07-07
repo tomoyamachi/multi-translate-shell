@@ -13,5 +13,5 @@ func main() {
 	}
 	fmt.Printf("Hi %s! You can translate input languages.\n",
 		user.Username)
-	editor.Start()
+	editor.Start("")
 }
