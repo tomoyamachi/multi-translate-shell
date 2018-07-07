@@ -6,6 +6,7 @@
 *.dylib
 bin
 pkg
+.idea
 # Test binary, build with `go test -c`
 *.test
 
@@ -13,3 +14,4 @@ pkg
 *.out
 src/github.com
 src/golang.org
+gcloud-auth.json
