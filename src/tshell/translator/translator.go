@@ -32,6 +32,8 @@ func pararellTranslate(translatee string, languages []TranslateLanguage) []*Tran
 		go setTranslateResult(translatee, language, resultChan)
 	}
 	var results []*TranslateResult
+
+	// sync.WaitGroupで非同期処理するほうが汎用的
 	valid := true
 	for valid{
 		results = append(results, <-resultChan)
@@ -43,9 +45,10 @@ func pararellTranslate(translatee string, languages []TranslateLanguage) []*Tran
 func setTranslateResult(translatee string, language TranslateLanguage, resultChan chan *TranslateResult) {
 	export := requestTranslate(translatee, language.From)
 	reimport := requestTranslate(export, language.To)
-	resultChan<-&TranslateResult{language.From, TranslateTexts{export, reimport}}
+	resultChan<-&TranslateResult{language.From + ":" + language.To, TranslateTexts{export, reimport}}
 }
 
+// connectionはsingletonに
 func requestTranslate(text string, toLanguage string) string {
 	ctx := context.Background()
 	client, err := translate.NewClient(ctx)

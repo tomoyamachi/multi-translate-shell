@@ -16,5 +16,5 @@ src/github.com
 src/golang.org
 src/cloud.google.com/
 src/google.golang.org/
-
+src/go.opencensus.io/
 gcloud-auth.json

@@ -27,7 +27,7 @@ func main() {
 		// 出力するテキスト
 		label := tui.NewLabel("")
 		label.SetSizePolicy(tui.Expanding, tui.Expanding)
-		labels[language.From] =  label
+		labels[language.From + ":" + language.To] =  label
 		// テキストを表示する領域
 		box := tui.NewVBox(label)
 		box.SetTitle(language.From + " <==> " + language.To)
