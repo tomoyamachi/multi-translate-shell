@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/marcusolsson/tui-go"
-	"tshell/translator"
+        "github.com/tomoyamachi/multi-translate-shell/translator"
 )
 
 var (
