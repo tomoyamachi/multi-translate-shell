@@ -75,7 +75,7 @@ func main() {
 		results := translator.Translate(translatee, languages)
 
 		for _, ts := range results {
-			labels[ts.Language].SetText(ts.Result.Export + "\n" + ts.Result.Reimport)
+			labels[ts.Language].SetText(ts.Result.Export + "\n-----\n" + ts.Result.Reimport)
 		}
 	})
 

@@ -26,15 +26,24 @@ func Translate(translatee string, languages []TranslateLanguage) []*TranslateRes
 	return pararellTranslate(translatee, languages)
 }
 
-func pararellTranslate(beforeText string, languages []TranslateLanguage) []*TranslateResult {
-	var results []*TranslateResult
+func pararellTranslate(translatee string, languages []TranslateLanguage) []*TranslateResult {
+	resultChan := make(chan *TranslateResult)
 	for _, language := range languages {
-		export := requestTranslate(beforeText, language.From)
-		reimport := requestTranslate(export, language.To)
-		results = append(results, &TranslateResult{language.From, TranslateTexts{export, reimport}})
+		go setTranslateResult(translatee, language, resultChan)
 	}
-
+	var results []*TranslateResult
+	valid := true
+	for valid{
+		results = append(results, <-resultChan)
+		valid = (len(results) != len(languages))
+	}
 	return results
+}
+
+func setTranslateResult(translatee string, language TranslateLanguage, resultChan chan *TranslateResult) {
+	export := requestTranslate(translatee, language.From)
+	reimport := requestTranslate(export, language.To)
+	resultChan<-&TranslateResult{language.From, TranslateTexts{export, reimport}}
 }
 
 func requestTranslate(text string, toLanguage string) string {
