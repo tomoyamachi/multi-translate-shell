@@ -12,9 +12,4 @@ pkg
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-src/github.com
-src/golang.org
-src/cloud.google.com/
-src/google.golang.org/
-src/go.opencensus.io/
 gcloud-auth.json
