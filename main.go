@@ -7,22 +7,31 @@ import (
         "github.com/tomoyamachi/multi-translate-shell/translator"
 )
 
+
 var (
 	translatee = ""
 	labels  = map[string]*tui.Label{}
-	resp *tui.Box
-)
-
-
-func main() {
-
-	languages := []translator.TranslateLanguage{
+	languages = []translator.TranslateLanguage{
 		{"de", "en"},
 		{"fr", "en"},
 		{"ja","en"},
 	}
+)
 
-	boxArray :=  []tui.Widget{}
+func createResponseAreaInterface(boxSlice []tui.Widget) []tui.Widget {
+	// NewVBoxの引数がinterface型のため
+	// interfaceを配列に保存
+	// Goの仕様で、interface型の引数はinterfaceそのものを渡さなければならない
+
+	is := make([]tui.Widget, len(boxSlice))
+	for i := range boxSlice {
+		is[i] = boxSlice[i]
+	}
+	return is
+}
+
+func main() {
+	var boxSlice = []tui.Widget{}
 	for _, language := range languages {
 		// 出力するテキスト
 		label := tui.NewLabel("")
@@ -32,19 +41,11 @@ func main() {
 		box := tui.NewVBox(label)
 		box.SetTitle(language.From + " <==> " + language.To)
 		box.SetBorder(true)
-		boxArray = append(boxArray, box)
+		boxSlice = append(boxSlice, box)
 	}
 
-
-	// NewVBoxの引数がinterface型のため
-	// interfaceを配列に保存
-	// Goの仕様で、interface型の引数はinterfaceそのものを渡さなければならない
-	is := make([]tui.Widget, len(boxArray))
-	for i := range boxArray {
-		is[i] = boxArray[i]
-	}
-
-	resp = tui.NewVBox( is... )
+	is := createResponseAreaInterface(boxSlice)
+	resp := tui.NewVBox( is... )
 	resp.SetSizePolicy(tui.Expanding, tui.Preferred)
 	browser := tui.NewHBox(resp)
 	browser.SetSizePolicy(tui.Preferred, tui.Expanding)
@@ -71,7 +72,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ui.SetKeybinding("Enter", func() {
+	ui.SetKeybinding("Alt+Enter", func() {
 		results := translator.Translate(translatee, languages)
 
 		for _, ts := range results {
