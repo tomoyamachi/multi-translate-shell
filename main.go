@@ -2,9 +2,8 @@ package main
 
 import (
 	"log"
-
 	"github.com/marcusolsson/tui-go"
-        "github.com/tomoyamachi/multi-translate-shell/translator"
+	"github.com/tomoyamachi/multi-translate-shell/translator"
 )
 
 
@@ -30,6 +29,7 @@ func createResponseAreaInterface(boxSlice []tui.Widget) []tui.Widget {
 	return is
 }
 
+
 func main() {
 	var boxSlice = []tui.Widget{}
 	for _, language := range languages {
@@ -44,6 +44,7 @@ func main() {
 		boxSlice = append(boxSlice, box)
 	}
 
+	// languageに入っている数に合わせてレイアウトを作る
 	is := createResponseAreaInterface(boxSlice)
 	resp := tui.NewVBox( is... )
 	resp.SetSizePolicy(tui.Expanding, tui.Preferred)
@@ -53,6 +54,7 @@ func main() {
 
 	inputEntry := tui.NewTextEdit()
 	inputEntry.SetText(translatee)
+	inputEntry.SetWordWrap(true)
 	inputEntry.OnTextChanged(func(e *tui.TextEdit) {
 		translatee = e.Text()
 	})
@@ -77,6 +79,7 @@ func main() {
 
 		for _, ts := range results {
 			labels[ts.Language].SetText(ts.Result.Export + "\n-----\n" + ts.Result.Reimport)
+			labels[ts.Language].SetWordWrap(true)
 		}
 	})
 
