@@ -1,6 +1,10 @@
 multi translation tool by golang
 ---
 
+# Demo
+
+![demo](https://user-images.githubusercontent.com/890517/45605983-4ae47f80-ba7c-11e8-8dd7-0966e90b7884.gif)
+
 # Build
 This service use Google Translation API.
 
