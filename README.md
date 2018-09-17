@@ -15,6 +15,7 @@ export GOOGLE_APPLICATION_CREDENTIALS=/path/to/gcloud-auth.json
 ```
 $ go get github.com/marcusolsson/tui-go
 $ go get cloud.google.com/go/translate
+$ go get github.com/atotto/clipboard
 ```
 
 # Extending using languages
