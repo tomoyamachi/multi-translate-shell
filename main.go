@@ -4,6 +4,7 @@ import (
 	"log"
 	"github.com/marcusolsson/tui-go"
 	"github.com/tomoyamachi/multi-translate-shell/translator"
+	"github.com/atotto/clipboard"
 )
 
 
@@ -81,6 +82,15 @@ func main() {
 			labels[ts.Language].SetText(ts.Result.Export + "\n-----\n" + ts.Result.Reimport)
 			labels[ts.Language].SetWordWrap(true)
 		}
+	})
+
+	ui.SetKeybinding("Ctrl+v", func() {
+		text, err := clipboard.ReadAll()
+		if err != nil {
+			panic(err)
+		}
+		inputEntry.SetText(translatee + text)
+		translatee = translatee + text
 	})
 
 	ui.SetKeybinding("Esc", func() { ui.Quit() })
