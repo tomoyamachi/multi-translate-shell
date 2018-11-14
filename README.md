@@ -9,9 +9,16 @@ multi translation tool by golang
 This service use Google Translation API.
 
 You need signup GCP account, and enable the Cloud Translation API for your project.
+Read this article : https://cloud.google.com/translate/docs/quickstart-client-libraries.
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=/path/to/gcloud-auth.json
+```
+
+# Install
+
+```
+go get -u github.com/tomoyamachi/multi-translate-shell
 ```
 
 # Package dependencies
